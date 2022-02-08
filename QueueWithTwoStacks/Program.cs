@@ -205,7 +205,7 @@ namespace QueueWithTwoStacks
             }
         }
 
-        class MyQueue<T>
+        class MyQueue4<T>
         {
             Stack<T> stack1 = new Stack<T>();
             Stack<T> stack2 = new Stack<T>();
@@ -239,11 +239,54 @@ namespace QueueWithTwoStacks
             }
         }
 
+        class MyQueue<T>
+        {
+            // Two stacks that simulate a Queue:
+            readonly Stack<T> stack1;
+            readonly Stack<T> stack2;
+
+            public MyQueue()
+            {
+                stack1 = new Stack<T>();
+                stack2 = new Stack<T>();
+            }
+
+            public void Enqueue(T x)
+            {
+                stack1.Push(x);
+            }
+
+            public void Dequeue()
+            {
+
+                if (stack2.Count==0)
+                {
+                    while (stack1.Count>0)
+                    {
+                        stack2.Push(stack1.Pop());
+                    }
+                }
+
+                stack2.Pop();
+            }
+            public T Peek()
+            {
+                if (stack2.Count==0)
+                {
+                    while (stack1.Count>0)
+                    {
+                        stack2.Push(stack1.Pop());
+                    }
+                }
+
+                return stack2.Peek();
+            }
+        }
+
         static void Main(string[] args)
         {
             // Queue
             MyQueue<int> queue = new MyQueue<int>();
-            //MyQueue1 queue = new MyQueue1();
 
             // Commands;
             string[] command;
