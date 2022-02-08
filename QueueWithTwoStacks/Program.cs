@@ -195,7 +195,7 @@ namespace QueueWithTwoStacks
             {
                 queue.Enqueue(value);
             }
-            public int Dequeue (int value)
+            public int Dequeue ()
             {
                 return queue.Dequeue();
             }
@@ -205,11 +205,45 @@ namespace QueueWithTwoStacks
             }
         }
 
+        class MyQueue<T>
+        {
+            Stack<T> stack1 = new Stack<T>();
+            Stack<T> stack2 = new Stack<T>();
+            public void Enqueue(T value)
+            {
+                if (stack2.Count == 0 && stack1.Count == 0)
+                    stack1.Push(value);
+                else
+                    stack2.Push(value);
+            }
+
+            public T Dequeue() {
+                if (stack1.Count == 0)
+                    MoveStack();
+                return stack1.Pop();
+            }
+
+            public T Peek()  {
+
+                if (stack1.Count == 0)
+                   MoveStack();
+                return stack1.Peek();
+            }
+
+            void MoveStack()
+            {
+                while (stack2.Count==0)
+                {
+                    stack1.Push(stack2.Pop());
+                }
+            }
+        }
+
         static void Main(string[] args)
         {
             // Queue
-            MyQueue2 queue = new MyQueue2();
-
+            MyQueue<int> queue = new MyQueue<int>();
+            //MyQueue1 queue = new MyQueue1();
 
             // Commands;
             string[] command;
